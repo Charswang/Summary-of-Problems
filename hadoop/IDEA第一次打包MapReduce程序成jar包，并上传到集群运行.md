@@ -1,0 +1,12 @@
+#### idea指定class打包事项
+- 首先在项目中对指定java文件编译成class文件，出错也没关系
+- File -> Project Structure -> Project Settings -> Artifacts -> 点击左上角+ -> jar -> Empty
+- 在上面可以修改生成jar包的名称
+- 对指定的class打包时，要先创建和对应java文件所在package名称一样的目录，然后点击+，在目录下面加上要添加的class文件（第一次在添加WordCount.class）的时候，只加了WordCount.class,在集群运行的时候，报了错。之后在添加WordCount.class的时候，发现同一级还有对应的WordCount$Mapper.class和WordCount$Reducer.class。把这两个加上之后，在集群中运行就不会报错了，会正常运行，只是时间比较久。
+- 然后Apply -> OK
+- Build -> Build Artifacts -> 选取jar包的名称 -> Rebuild
+- 一般编译生成的文件默认在target目录中，生成的jar包默认在out目录下。out目录是生成jar之后自动创建的。
+- 使用rz命令将本地jar包上传到集群中
+- 进入jar包所在目录，使用hadoop jar jar包名 class文件主类所在package名.主类名称
+- 例如：第一次打包：包名为WordCount1.jar,生成jar包时创建的package目录为mapReduceTest。main方法所在类名称为WordCount,所以执行的命令为：hadoop jar WordCount1.jar mapReduceTest.WordCount
+- 执行之后，去对应output目录中查看结果即可。
